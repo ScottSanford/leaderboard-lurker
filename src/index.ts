@@ -16,7 +16,6 @@ function processFileStream(filePath: string): void {
 
 	readLine.on('line', (line: string) => {
 		const { awayTeam, homeTeam } = saveSoccerMatchResults(line)
-
 		if (isValidSoccerMatch) {
 
 			// hit the next day, so we want to end the match day
@@ -29,6 +28,12 @@ function processFileStream(filePath: string): void {
 
 		currentMatchDayTeams.push(awayTeam.name, homeTeam.name)
 		updateLeaderBoard({ awayTeam, homeTeam })
+	})
+
+	// shows last day results
+	readLine.on('close', () => {
+		showEndMatchDayResults()
+		currentMatchDayTeams = []
 	})
 }
 
