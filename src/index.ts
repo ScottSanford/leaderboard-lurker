@@ -1,15 +1,15 @@
-import { processSoccerMatch } from './matchDay'
-import { readStream } from './readStream'
+import { endOfMatchDay, processSoccerMatch } from './services/match-day-service'
+import { readStream } from './read-stream'
 
-function index() {
+function index(): void {
   if (process.argv.length !== 3) {
-    console.log('Incorrect number of params entered')
-    console.log('usage: scores input/sample-input.txt')
+    console.log('No input file was given.')
+    console.log('Example: scores input/sample-input.txt')
     return
   }
 
   const fileInput = process.argv[2]
-  readStream(fileInput, processSoccerMatch)
+  readStream(fileInput, processSoccerMatch, endOfMatchDay)
 }
 
 index()
