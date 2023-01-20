@@ -1,5 +1,5 @@
-import { TIE_GAME_POINTS, WIN_GAME_POINTS } from './constants'
-import { SoccerMatch } from './matchDay'
+import { INITIAL_TEAM_POINTS, TIE_GAME_POINTS, WIN_GAME_POINTS } from '../constants'
+import { SoccerMatch } from './match-day-service'
 
 export type LeagueLeaderBoard = {
   [key: string]: number
@@ -8,13 +8,11 @@ export type LeagueLeaderBoard = {
 export const leagueLeaderBoard: LeagueLeaderBoard = {}
 
 function initializeLeaderBoard({ awayTeam, homeTeam }: SoccerMatch): void {
-  if (!leagueLeaderBoard[awayTeam.name]) {
-    leagueLeaderBoard[awayTeam.name] = 0
-  }
-
-  if (!leagueLeaderBoard[homeTeam.name]) {
-    leagueLeaderBoard[homeTeam.name] = 0
-  }
+  [awayTeam, homeTeam].forEach((team) => {
+    if (!leagueLeaderBoard[team.name]) {
+      leagueLeaderBoard[team.name] = INITIAL_TEAM_POINTS
+    }
+  })
 }
 
 export function updateLeaderBoard({ awayTeam, homeTeam }: SoccerMatch): void {
