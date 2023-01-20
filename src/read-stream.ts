@@ -7,7 +7,10 @@ export function readStream(
   processCloseCallback?: () => void
 ): void {
   const fileStream = createReadStream(fileInput, 'utf-8')
-  const readLine = readline.createInterface({ input: fileStream })
+  const readLine = readline.createInterface({
+    input: fileStream,
+    crlfDelay: Infinity,
+  })
 
   readLine.on('line', processLineCallback)
 

@@ -79,7 +79,7 @@ export function processSoccerMatch(line: string): void {
   updateLeaderBoard({ awayTeam, homeTeam })
 }
 
-export function endOfMatchDay() {
+export function endOfMatchDay(): void {
   showMatchDayResults()
   currentMatchDayTeams = []
 }
