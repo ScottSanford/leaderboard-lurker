@@ -1,0 +1,12 @@
+{
+	"extends": [
+		"wesbos/typescript"
+	],
+	"rules": {
+		"no-plusplus": 0,
+		"comma-dangle": 0
+	},
+	"ignorePatterns": [
+		"./dist/*"
+	]
+}

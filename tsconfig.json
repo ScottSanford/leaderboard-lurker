@@ -1,12 +1,23 @@
 {
 	"compilerOptions": {
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext",
-		"target": "ES2020",
-		"sourceMap": true,
-		"outDir": "dist",
+		"target": "ESNext",
+		"module": "commonjs",
+		"lib": [
+			"ES6",
+			"ES2015",
+			"ESNext"
+		],
+		"outDir": "lib",
+		"rootDir": "src",
+		"strict": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"importHelpers": true,
+		"removeComments": true
 	},
-	"include": [
-		"src/**/*"
-	],
+	"exclude": [
+		"node_modules",
+		"lib",
+	]
 }

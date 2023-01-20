@@ -2,15 +2,19 @@
   "name": "soccer-scores",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "./lib/index.js",
   "bin": {
     "scores": "./bin/scores"
   },
   "scripts": {
-    "start": "nodemon --watch 'src/**/*.ts' --exec \"npx ts-node\" src/index.ts",
-    "build": "tsc",
-    "local": "npm run build && scores",
-    "lint": "eslint .",
+    "start": "npm run build && npm run global",
+    "build": "npm run clean:some && tsc -p .",
+    "global": "npm i --location=global && scores input/sample-input.txt",
+    "clean:some": "rm -rf ./lib",
+    "clean:all": "rm -rf ./node_modules ./package-lock.json ./lib",
+    "refresh": "npm run clean:all && npm install",
+    "local": "npm run build && scores input/sample-input.txt",
+    "lint": "eslint src/",
     "lint:fix": "eslint . --fix"
   },
   "repository": {
@@ -20,9 +24,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ScottSanford/soccer-scores/issues"
-  },
   "homepage": "https://github.com/ScottSanford/soccer-scores#readme",
   "devDependencies": {
     "@types/node": "^18.11.18",
