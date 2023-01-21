@@ -1,8 +1,4 @@
-import {
-  leagueLeaderBoard,
-  LeagueLeaderBoard,
-  updateLeaderBoard,
-} from './leaderboard-service'
+import { getLeagueLeaderBoard, LeagueLeaderBoard, updateLeaderBoard } from './leaderboard-service'
 
 interface Team {
   name: string
@@ -20,7 +16,7 @@ let currentMatchDay = 1
 const lineFileRegex =
   /^(\s*[A-Za-z0-9]+( \s*[A-Za-z0-9]+)+\s*),(\s*[A-Za-z0-9]+(\s* [A-Za-z0-9]+)+\s*$)/i
 
-function formatSoccerMatchResults(soccerMatch: string): SoccerMatch {
+export function formatSoccerMatchResults(soccerMatch: string): SoccerMatch {
   const [awayTeam, homeTeam] = soccerMatch.split(',')
 
   return {
@@ -31,11 +27,11 @@ function formatSoccerMatchResults(soccerMatch: string): SoccerMatch {
     homeTeam: {
       name: homeTeam.substring(0, homeTeam.length - 1).trim(),
       score: parseInt(homeTeam.substring(homeTeam.length - 1)),
-    }
+    },
   }
 }
 
-function getMatchDayLeaders(leaderBoard: LeagueLeaderBoard, n = 3): LeagueLeaderBoard {
+export function getMatchDayLeaders(leaderBoard: LeagueLeaderBoard, n = 3): LeagueLeaderBoard {
   return Object.entries(leaderBoard)
     .sort((a, b) => b[1] - a[1])
     .slice(0, n)
@@ -48,16 +44,20 @@ function getMatchDayLeaders(leaderBoard: LeagueLeaderBoard, n = 3): LeagueLeader
 function showMatchDayResults(): void {
   console.log(`Matchday ${currentMatchDay}`)
 
-  const matchDayLeaders = Object.entries(getMatchDayLeaders(leagueLeaderBoard))
-  matchDayLeaders.forEach(([name, score]: [string, number]) => {
+  const leaderBoard = getLeagueLeaderBoard()
+  const matchDayLeaders = getMatchDayLeaders(leaderBoard)
+  Object.entries(matchDayLeaders).forEach(([name, score]: [string, number]) => {
     console.log(`${name}, ${score} ${score === 1 ? 'pt' : 'pts'}`)
   })
 
   console.log('\n')
 }
 
-function isEndOfMatchDay(awayTeamName: string, homeTeamName: string): boolean {
-  return currentMatchDayTeams.includes(awayTeamName) || currentMatchDayTeams.includes(homeTeamName)
+export function isEndOfMatchDay(
+  matchDayTeams: string[],
+  teams: { awayName: string; homeName: string }
+): boolean {
+  return matchDayTeams.includes(teams.awayName) || matchDayTeams.includes(teams.homeName)
 }
 
 export function processSoccerMatch(line: string): void {
@@ -66,16 +66,17 @@ export function processSoccerMatch(line: string): void {
 
   const { awayTeam, homeTeam } = formatSoccerMatchResults(line)
 
-  if (isEndOfMatchDay(awayTeam.name, homeTeam.name)) {
+  if (
+    isEndOfMatchDay(currentMatchDayTeams, {
+      awayName: awayTeam.name,
+      homeName: homeTeam.name,
+    })
+  ) {
     endOfMatchDay()
     currentMatchDay++
   }
 
-  currentMatchDayTeams = [
-    ...currentMatchDayTeams,
-    awayTeam.name,
-    homeTeam.name
-  ]
+  currentMatchDayTeams = [...currentMatchDayTeams, awayTeam.name, homeTeam.name]
   updateLeaderBoard({ awayTeam, homeTeam })
 }
 

@@ -19,5 +19,6 @@
 	"exclude": [
 		"node_modules",
 		"lib",
+		"jest.config.ts"
 	]
 }

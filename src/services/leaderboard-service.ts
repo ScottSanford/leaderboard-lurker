@@ -1,29 +1,59 @@
-import { INITIAL_TEAM_POINTS, TIE_GAME_POINTS, WIN_GAME_POINTS } from '../constants'
 import { SoccerMatch } from './match-day-service'
 
 export type LeagueLeaderBoard = {
   [key: string]: number
 }
 
-export const leagueLeaderBoard: LeagueLeaderBoard = {}
+interface TeamPoints {
+  name: string
+  points: number
+}
 
-function initializeLeaderBoard({ awayTeam, homeTeam }: SoccerMatch): void {
-  [awayTeam, homeTeam].forEach((team) => {
-    if (!leagueLeaderBoard[team.name]) {
-      leagueLeaderBoard[team.name] = INITIAL_TEAM_POINTS
+export const WIN_GAME_POINTS = 3
+export const TIE_GAME_POINTS = 1
+
+let leagueLeaderBoard: LeagueLeaderBoard = {}
+
+export function getLeagueLeaderBoard(): LeagueLeaderBoard {
+  return leagueLeaderBoard
+}
+
+export function addTeamPoints(
+  leaderBoard: LeagueLeaderBoard,
+  { name, points }: TeamPoints
+): LeagueLeaderBoard {
+  if (!leaderBoard[name]) {
+    return {
+      ...leaderBoard,
+      [name]: points,
     }
-  })
+  }
+
+  return {
+    ...leaderBoard,
+    [name]: leaderBoard[name] + points,
+  }
 }
 
 export function updateLeaderBoard({ awayTeam, homeTeam }: SoccerMatch): void {
-  initializeLeaderBoard({ awayTeam, homeTeam })
-
   if (awayTeam.score > homeTeam.score) {
-    leagueLeaderBoard[awayTeam.name] += WIN_GAME_POINTS
+    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+      name: awayTeam.name,
+      points: WIN_GAME_POINTS,
+    })
   } else if (homeTeam.score > awayTeam.score) {
-    leagueLeaderBoard[homeTeam.name] += WIN_GAME_POINTS
+    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+      name: homeTeam.name,
+      points: WIN_GAME_POINTS,
+    })
   } else {
-    leagueLeaderBoard[awayTeam.name] += TIE_GAME_POINTS
-    leagueLeaderBoard[homeTeam.name] += TIE_GAME_POINTS
+    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+      name: awayTeam.name,
+      points: TIE_GAME_POINTS,
+    })
+    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+      name: homeTeam.name,
+      points: TIE_GAME_POINTS,
+    })
   }
 }
