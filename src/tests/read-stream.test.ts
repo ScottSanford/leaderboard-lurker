@@ -9,9 +9,7 @@ xdescribe('Read Stream', () => {
   const fileContent = 'line1\nline2\nline3\n'
 
   test('readStream calls processLineCallback for each line in file', async () => {
-    jest
-      .spyOn(fs, 'createReadStream')
-      .mockReturnValue(fs.createReadStream(fileInput, 'utf-8'))
+    jest.spyOn(fs, 'createReadStream').mockReturnValue(fs.createReadStream(fileInput, 'utf-8'))
 
     readStream(fileInput, processLineCallback)
 
@@ -21,9 +19,7 @@ xdescribe('Read Stream', () => {
   })
 
   test('readStream calls processCloseCallback when provided', async () => {
-    jest
-      .spyOn(fs, 'createReadStream')
-      .mockReturnValue(fs.createReadStream(fileInput, 'utf-8'))
+    jest.spyOn(fs, 'createReadStream').mockReturnValue(fs.createReadStream(fileInput, 'utf-8'))
 
     readStream(fileInput, processLineCallback, processCloseCallback)
 

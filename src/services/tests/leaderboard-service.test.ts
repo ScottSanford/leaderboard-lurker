@@ -1,26 +1,58 @@
-import { addTeamPoints } from '../leaderboard-service'
+import {
+  addTeamMatchPoints,
+  getLeagueLeaders,
+  LeagueLeaderBoard,
+  TeamMatch,
+} from '../leaderboard-service'
 
 describe('leaderboard-service', () => {
-  describe('addTeamPoints', () => {
-    test('adds a team and points to the leaderboard', () => {
-      const leaderBoard = {}
-      const teamPoints = {
-        name: 'teamA',
-        points: 3,
-      }
-      const expected = { teamA: 3 }
-      expect(addTeamPoints(leaderBoard, teamPoints)).toEqual(expected)
+  const teamMatchPoints: TeamMatch = {
+    name: 'teamA',
+    points: 3,
+  }
+  describe('addTeamPoints()', () => {
+    test('adds a team and match points to the leaderboard', () => {
+      const leaderBoard: LeagueLeaderBoard = {}
+      const expected: LeagueLeaderBoard = { teamA: 3 }
+      expect(addTeamMatchPoints(leaderBoard, teamMatchPoints)).toEqual(expected)
     })
 
-    test('updates points to specific team', () => {
-      const leaderBoard = { teamA: 10 }
-      const teamPoints = {
-        name: 'teamA',
-        points: 3,
-      }
-      const expected = { teamA: 13 }
+    test('updates exisitng team total points', () => {
+      const leaderBoard: LeagueLeaderBoard = { teamA: 10 }
+      const expected: LeagueLeaderBoard = { teamA: 13 }
 
-      expect(addTeamPoints(leaderBoard, teamPoints)).toEqual(expected)
+      expect(addTeamMatchPoints(leaderBoard, teamMatchPoints)).toEqual(expected)
+    })
+  })
+  describe('getMatchDayLeaders()', () => {
+    test('returns top n leaders', () => {
+      const leaderBoard = {
+        teamA: 10,
+        teamB: 8,
+        teamC: 6,
+        teamD: 4,
+      }
+      const expected = {
+        teamA: 10,
+        teamB: 8,
+        teamC: 6,
+      }
+
+      expect(getLeagueLeaders(leaderBoard, 3)).toEqual(expected)
+    })
+
+    test('returns all leaders when n is greater than the length of leaderBoard', () => {
+      const leaderBoard = {
+        teamA: 10,
+        teamB: 8,
+      }
+
+      const expected = {
+        teamA: 10,
+        teamB: 8,
+      }
+
+      expect(getLeagueLeaders(leaderBoard, 3)).toEqual(expected)
     })
   })
 })

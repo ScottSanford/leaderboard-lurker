@@ -4,7 +4,7 @@ export type LeagueLeaderBoard = {
   [key: string]: number
 }
 
-interface TeamPoints {
+export interface TeamMatch {
   name: string
   points: number
 }
@@ -18,9 +18,9 @@ export function getLeagueLeaderBoard(): LeagueLeaderBoard {
   return leagueLeaderBoard
 }
 
-export function addTeamPoints(
+export function addTeamMatchPoints(
   leaderBoard: LeagueLeaderBoard,
-  { name, points }: TeamPoints
+  { name, points }: TeamMatch
 ): LeagueLeaderBoard {
   if (!leaderBoard[name]) {
     return {
@@ -37,23 +37,33 @@ export function addTeamPoints(
 
 export function updateLeaderBoard({ awayTeam, homeTeam }: SoccerMatch): void {
   if (awayTeam.score > homeTeam.score) {
-    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+    leagueLeaderBoard = addTeamMatchPoints(leagueLeaderBoard, {
       name: awayTeam.name,
       points: WIN_GAME_POINTS,
     })
   } else if (homeTeam.score > awayTeam.score) {
-    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+    leagueLeaderBoard = addTeamMatchPoints(leagueLeaderBoard, {
       name: homeTeam.name,
       points: WIN_GAME_POINTS,
     })
   } else {
-    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+    leagueLeaderBoard = addTeamMatchPoints(leagueLeaderBoard, {
       name: awayTeam.name,
       points: TIE_GAME_POINTS,
     })
-    leagueLeaderBoard = addTeamPoints(leagueLeaderBoard, {
+    leagueLeaderBoard = addTeamMatchPoints(leagueLeaderBoard, {
       name: homeTeam.name,
       points: TIE_GAME_POINTS,
     })
   }
+}
+
+export function getLeagueLeaders(leaderBoard: LeagueLeaderBoard, n = 3): LeagueLeaderBoard {
+  return Object.entries(leaderBoard)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, n)
+    .reduce((acc, [key, value]) => {
+      acc[key] = value
+      return acc
+    }, {} as LeagueLeaderBoard)
 }

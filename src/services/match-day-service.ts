@@ -1,4 +1,4 @@
-import { getLeagueLeaderBoard, LeagueLeaderBoard, updateLeaderBoard } from './leaderboard-service'
+import { getLeagueLeaderBoard, getLeagueLeaders, updateLeaderBoard } from './leaderboard-service'
 
 interface Team {
   name: string
@@ -31,21 +31,11 @@ export function formatSoccerMatchResults(soccerMatch: string): SoccerMatch {
   }
 }
 
-export function getMatchDayLeaders(leaderBoard: LeagueLeaderBoard, n = 3): LeagueLeaderBoard {
-  return Object.entries(leaderBoard)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, n)
-    .reduce((acc, [key, value]) => {
-      acc[key] = value
-      return acc
-    }, {} as LeagueLeaderBoard)
-}
-
 function showMatchDayResults(): void {
   console.log(`Matchday ${currentMatchDay}`)
 
   const leaderBoard = getLeagueLeaderBoard()
-  const matchDayLeaders = getMatchDayLeaders(leaderBoard)
+  const matchDayLeaders = getLeagueLeaders(leaderBoard)
   Object.entries(matchDayLeaders).forEach(([name, score]: [string, number]) => {
     console.log(`${name}, ${score} ${score === 1 ? 'pt' : 'pts'}`)
   })

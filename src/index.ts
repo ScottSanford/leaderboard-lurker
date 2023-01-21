@@ -1,7 +1,7 @@
 import { endOfMatchDay, processSoccerMatch } from './services/match-day-service'
 import { readStream } from './read-stream'
 
-export function server(): void {
+export function index(): void {
   if (process.argv.length !== 3) {
     console.log('No input file was given.')
     console.log('Example: scores input/sample-input.txt')
@@ -12,4 +12,4 @@ export function server(): void {
   readStream(fileInput, processSoccerMatch, endOfMatchDay)
 }
 
-server()
+index()

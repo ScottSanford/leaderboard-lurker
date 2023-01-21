@@ -1,8 +1,4 @@
-import {
-  formatSoccerMatchResults,
-  getMatchDayLeaders,
-  isEndOfMatchDay,
-} from '../match-day-service'
+import { formatSoccerMatchResults, isEndOfMatchDay } from '../match-day-service'
 
 describe('match-day-service', () => {
   describe('formatSoccerMatchResults()', () => {
@@ -19,38 +15,6 @@ describe('match-day-service', () => {
         },
       }
       expect(formatSoccerMatchResults(soccerMatch)).toEqual(expected)
-    })
-  })
-
-  describe('getMatchDayLeaders()', () => {
-    test('returns top n leaders', () => {
-      const leaderBoard = {
-        teamA: 10,
-        teamB: 8,
-        teamC: 6,
-        teamD: 4,
-      }
-      const expected = {
-        teamA: 10,
-        teamB: 8,
-        teamC: 6,
-      }
-
-      expect(getMatchDayLeaders(leaderBoard, 3)).toEqual(expected)
-    })
-
-    test('returns all leaders when n is greater than the length of leaderBoard', () => {
-      const leaderBoard = {
-        teamA: 10,
-        teamB: 8,
-      }
-
-      const expected = {
-        teamA: 10,
-        teamB: 8,
-      }
-
-      expect(getMatchDayLeaders(leaderBoard, 3)).toEqual(expected)
     })
   })
 
