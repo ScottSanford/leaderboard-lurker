@@ -1,30 +1,56 @@
-import fs from 'fs'
+import { Readable } from 'stream'
+import readline from 'readline'
 import { readStream } from '../read-stream'
 
-xdescribe('Read Stream', () => {
-  const processLineCallback = jest.fn()
-  const processCloseCallback = jest.fn()
+jest.mock('fs', () => ({
+  createReadStream: jest.fn().mockReturnValue(
+    new Readable({
+      read() {},
+    })
+  ),
+}))
 
-  const fileInput = 'input/sample-input.txt'
-  const fileContent = 'line1\nline2\nline3\n'
+jest.mock('readline', () => ({
+  createInterface: jest.fn().mockReturnValue({
+    on: jest.fn(),
+  }),
+}))
 
-  test('readStream calls processLineCallback for each line in file', async () => {
-    jest.spyOn(fs, 'createReadStream').mockReturnValue(fs.createReadStream(fileInput, 'utf-8'))
+describe('readStream()', () => {
+  const mockFileInput = 'input/sample-input.txt'
+  const mockProcessLineCallback = jest.fn()
+  const mockProcessCloseCallback = jest.fn()
+  const mockReadLine = (require('readline') as typeof import('readline'))
+    .createInterface as jest.Mock<readline.ReadLine>
+  const onMock = mockReadLine().on as jest.Mock
 
-    readStream(fileInput, processLineCallback)
-
-    await new Promise(process.nextTick)
-
-    expect(processLineCallback).toHaveBeenCalled()
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
-  test('readStream calls processCloseCallback when provided', async () => {
-    jest.spyOn(fs, 'createReadStream').mockReturnValue(fs.createReadStream(fileInput, 'utf-8'))
+  test('calls the processLineCallback when supplied', () => {
+    readStream(mockFileInput, mockProcessLineCallback)
 
-    readStream(fileInput, processLineCallback, processCloseCallback)
+    expect(mockReadLine).toHaveBeenCalledWith({
+      input: expect.any(Object) as jest.Mock,
+      crlfDelay: Infinity,
+    })
 
-    await new Promise(process.nextTick)
+    expect(onMock).toHaveBeenCalledTimes(1)
+    expect(onMock).toHaveBeenCalledWith('line', mockProcessLineCallback)
+    expect(onMock).not.toHaveBeenCalledWith('close', mockProcessCloseCallback)
+  })
 
-    expect(processCloseCallback).toHaveBeenCalled()
+  test('calls the processCloseCallback when supplied', () => {
+    readStream(mockFileInput, mockProcessLineCallback, mockProcessCloseCallback)
+
+    expect(mockReadLine).toHaveBeenCalledWith({
+      input: expect.any(Object) as jest.Mock,
+      crlfDelay: Infinity,
+    })
+
+    expect(onMock).toHaveBeenCalledTimes(2)
+    expect(onMock).toHaveBeenCalledWith('line', mockProcessLineCallback)
+    expect(onMock).toHaveBeenCalledWith('close', mockProcessCloseCallback)
   })
 })
