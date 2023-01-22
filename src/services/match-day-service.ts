@@ -37,7 +37,7 @@ function showMatchDayResults(): void {
   const leaderBoard = getLeagueLeaderBoard()
   const matchDayLeaders = getLeagueLeaders(leaderBoard)
   Object.entries(matchDayLeaders)
-    .sort((a, b) => b[1] - a[1])
+    .sort((a, b) => (a[1] === b[1] ? a[0].localeCompare(b[0]) : b[1] - a[1]))
     .forEach(([name, score]: [string, number]) => {
       console.log(`${name}, ${score} ${score === 1 ? 'pt' : 'pts'}`)
     })

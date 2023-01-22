@@ -1,14 +1,14 @@
 import { createReadStream } from 'fs'
 import readline from 'readline'
+import { Readable } from 'stream'
 
 export function readStream(
-  fileInput: string,
+  readlineInput: string | Readable,
   processLineCallback: (line: string) => void,
   processCloseCallback?: () => void
 ): void {
-  const fileStream = createReadStream(fileInput, 'utf-8')
   const readLine = readline.createInterface({
-    input: fileStream,
+    input: getInputType(readlineInput),
     crlfDelay: Infinity,
   })
 
@@ -17,4 +17,10 @@ export function readStream(
   if (processCloseCallback) {
     readLine.on('close', processCloseCallback)
   }
+}
+
+function getInputType(readlineInput: string | Readable): Readable {
+  return typeof readlineInput === 'string'
+    ? createReadStream(readlineInput, 'utf-8')
+    : readlineInput
 }

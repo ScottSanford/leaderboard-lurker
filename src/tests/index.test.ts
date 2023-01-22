@@ -7,7 +7,9 @@ describe('Initializing the CLI app', () => {
 
     index()
 
-    expect(console.log).toHaveBeenCalledWith('No input file was given.')
+    expect(console.log).toHaveBeenCalledWith(
+      'No file, no league winners. Did you forget to scout the competition?'
+    )
     expect(console.log).toHaveBeenCalledWith('Example: scores input/sample-input.txt')
   })
 })
