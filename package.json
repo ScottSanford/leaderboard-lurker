@@ -9,7 +9,8 @@
   "scripts": {
     "start": "npm run build && npm run install:global",
     "build": "npm run clean:some && tsc -p .",
-    "install:global": "npm i --location=global",
+    "node:install": "npm install",
+    "install:global": "npm run node:install && npm run build && npm i --location=global",
     "clean:some": "rm -rf ./lib",
     "local:file": "npm run build && leaderboardlurker input/soccer-matches.txt",
     "generate:matches": "chmod +x ./matches && ./matches",
