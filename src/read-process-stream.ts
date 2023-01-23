@@ -2,7 +2,7 @@ import { createReadStream } from 'fs'
 import readline from 'readline'
 import { Readable } from 'stream'
 
-export function readStream(
+export function readAndProcessStream(
   readlineInput: string | Readable,
   processLineCallback: (line: string) => void,
   processCloseCallback?: () => void

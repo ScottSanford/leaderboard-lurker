@@ -1,9 +1,9 @@
 import { endOfMatchDay, processSoccerMatch } from './services/match-day-service'
-import { readStream } from './read-stream'
+import { readAndProcessStream } from './read-process-stream'
 
 export function index(): void {
   if (!process.stdout.isTTY || !process.stdin.isTTY) {
-    readStream(process.stdin, processSoccerMatch, endOfMatchDay)
+    readAndProcessStream(process.stdin, processSoccerMatch, endOfMatchDay)
     return
   }
 
@@ -14,7 +14,7 @@ export function index(): void {
   }
 
   const fileInput = process.argv[2]
-  readStream(fileInput, processSoccerMatch, endOfMatchDay)
+  readAndProcessStream(fileInput, processSoccerMatch, endOfMatchDay)
 }
 
 index()

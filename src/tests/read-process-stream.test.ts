@@ -1,6 +1,6 @@
 import { Readable } from 'stream'
 import readline from 'readline'
-import { readStream } from '../read-stream'
+import { readAndProcessStream } from '../read-process-stream'
 
 jest.mock('fs', () => ({
   createReadStream: jest.fn().mockReturnValue(
@@ -29,7 +29,7 @@ describe('readStream()', () => {
   })
 
   test('calls the processLineCallback when supplied', () => {
-    readStream(mockFileInput, mockProcessLineCallback)
+    readAndProcessStream(mockFileInput, mockProcessLineCallback)
 
     expect(mockReadLine).toHaveBeenCalledWith({
       input: expect.any(Object) as jest.Mock,
@@ -42,7 +42,7 @@ describe('readStream()', () => {
   })
 
   test('calls the processCloseCallback when supplied', () => {
-    readStream(mockFileInput, mockProcessLineCallback, mockProcessCloseCallback)
+    readAndProcessStream(mockFileInput, mockProcessLineCallback, mockProcessCloseCallback)
 
     expect(mockReadLine).toHaveBeenCalledWith({
       input: expect.any(Object) as jest.Mock,

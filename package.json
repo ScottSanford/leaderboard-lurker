@@ -7,15 +7,15 @@
     "leaderboardlurker": "./bin/leaderboardlurker"
   },
   "scripts": {
-    "start": "npm run build && npm run global",
+    "start": "npm run build && npm run install:global",
     "build": "npm run clean:some && tsc -p .",
-    "global": "npm i --location=global && leaderboardlurker input/sample-input.txt",
+    "install:global": "npm i --location=global",
     "clean:some": "rm -rf ./lib",
     "local:file": "npm run build && leaderboardlurker input/soccer-matches.txt",
     "lint": "eslint src/",
     "lint:fix": "eslint . --fix",
     "test": "jest src",
-    "test:watch": "jest --watch"
+    "test:watch": "jest src --watch --runInBand --detectOpenHandles"
   },
   "repository": {
     "type": "git",

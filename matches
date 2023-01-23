@@ -1,0 +1,29 @@
+#!/bin/bash
+
+echo "Preparing large-input.txt file"
+teams=("San Jose Earthquakes" "Santa Cruz Slugs" "Capitola Seahorses" "Aptos FC" "Felton Lumberjacks" "Monterey United")
+team_count=${#teams[@]}
+used_teams=()
+
+for i in {1..1000000}; do
+  if [ ${#used_teams[@]} -eq $team_count ]; then
+    used_teams=()
+  fi
+  home_team=${teams[$((RANDOM % team_count))]}
+  while [[ " ${used_teams[@]} " =~ " ${home_team} " ]]; do
+    home_team=${teams[$((RANDOM % team_count))]}
+  done
+  used_teams+=("$home_team")
+  away_team=${teams[$((RANDOM % team_count))]}
+  while [[ " ${used_teams[@]} " =~ " ${away_team} " ]]; do
+    away_team=${teams[$((RANDOM % team_count))]}
+  done
+  used_teams+=("$away_team")
+
+  # Generate a random score for the match
+  home_score=$((RANDOM % 10))
+  away_score=$((RANDOM % 10))
+
+  match_result="$home_team $home_score, $away_team $away_score"
+  echo $match_result >> ./input/large-input.txt
+done
