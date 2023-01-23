@@ -16,7 +16,7 @@ let currentMatchDay = 1
 const lineFileRegex =
   /^(\s*[A-Za-z0-9]+( \s*[A-Za-z0-9]+)+\s*),(\s*[A-Za-z0-9]+(\s* [A-Za-z0-9]+)+\s*$)/i
 
-export function formatSoccerMatchResults(soccerMatch: string): SoccerMatch {
+export function parseSoccerMatchResults(soccerMatch: string): SoccerMatch {
   const [awayTeam, homeTeam] = soccerMatch.split(',')
 
   return {
@@ -56,7 +56,7 @@ export function processSoccerMatch(line: string): void {
   const isValidSoccerMatch = lineFileRegex.test(line)
   if (!isValidSoccerMatch) return
 
-  const { awayTeam, homeTeam } = formatSoccerMatchResults(line)
+  const { awayTeam, homeTeam } = parseSoccerMatchResults(line)
 
   if (
     isEndOfMatchDay(currentMatchDayTeams, {

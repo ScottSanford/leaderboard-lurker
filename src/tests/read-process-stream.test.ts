@@ -16,7 +16,7 @@ jest.mock('readline', () => ({
   }),
 }))
 
-describe('readStream()', () => {
+describe('readAndProcessStream()', () => {
   const mockFileInput = 'input/sample-input.txt'
   const mockProcessLineCallback = jest.fn()
   const mockProcessCloseCallback = jest.fn()

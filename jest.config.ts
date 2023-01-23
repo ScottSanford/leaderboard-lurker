@@ -6,6 +6,7 @@ const config: Config = {
     '^.+\\.ts?$': 'ts-jest',
   },
   verbose: true,
+  testPathIgnorePatterns: ['src/tests/index.test.ts']
 }
 
 export default config

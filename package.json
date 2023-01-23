@@ -15,7 +15,7 @@
     "lint": "eslint src/",
     "lint:fix": "eslint . --fix",
     "test": "jest src",
-    "test:watch": "jest src --watch --runInBand --detectOpenHandles"
+    "test:watch": "jest src --watch"
   },
   "repository": {
     "type": "git",
@@ -39,5 +39,8 @@
     "extends": [
       "wesbos/typescript"
     ]
+  },
+  "dependencies": {
+    "mock-stdin": "^1.0.0"
   }
 }

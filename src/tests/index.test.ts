@@ -1,19 +1,42 @@
+import { stdin } from 'mock-stdin'
 import { index } from '../index'
-import * as RS from '../read-process-stream'
-import { endOfMatchDay, processSoccerMatch } from '../services/match-day-service'
+import { readAndProcessStream } from '../read-process-stream'
+
+const mockProcessSoccerMatch = jest.fn()
+const mockEndOfMatchDay = jest.fn()
+
+const mockStdin = stdin()
 
 describe.only('Initializing the CLI app', () => {
-  process.stdout.isTTY = true
-  process.stdin.isTTY = true
-  process.argv = ['node', './leaderboardlurker']
-  // const readStreamSpy = jest.spyOn(RS, 'readStream').mockImplementation(() => {})
-
   afterEach(() => {
     jest.clearAllMocks()
+    mockStdin.restore()
+    process.stdin.isTTY = false
+    process.stdout.isTTY = false
+  })
+
+  test('index function handles non-TTY input and output', () => {
+    process.argv = []
+    process.stdin.isTTY = false
+    process.stdout.isTTY = false
+
+    index()
+
+    expect(readAndProcessStream).toHaveBeenCalledWith(
+      mockStdin,
+      mockProcessSoccerMatch,
+      mockEndOfMatchDay
+    )
   })
 
   test('logs an error message when no file is provided', () => {
     jest.spyOn(console, 'log').mockImplementation(() => {})
+    process.stdin.isTTY = true
+    process.stdout.isTTY = true
+
+    process.nextTick(() => {
+      mockStdin.send(['TeamA 0, TeamB 2'])
+    })
 
     index()
 
@@ -24,23 +47,21 @@ describe.only('Initializing the CLI app', () => {
     expect(console.log).toHaveBeenCalledWith('Example: leaderboardlurker input/sample-input.txt')
   })
 
-  xtest('index function handles non-TTY input and output', () => {
-    process.argv = []
-
-    index()
-
-    // expect(readStreamSpy).toHaveBeenCalledWith(process.stdin, processSoccerMatch, endOfMatchDay)
-  })
-
   test('calls `readStream` with the file input when a file is provided', () => {
     process.argv = ['node', 'index.js', 'sample-input.txt']
+    process.stdin.isTTY = true
+    process.stdout.isTTY = true
+
+    process.nextTick(() => {
+      mockStdin.send(['TeamA 0, TeamB 2'])
+    })
 
     index()
 
-    // expect(readStreamSpy).toHaveBeenCalledWith(
-    //   'sample-input.txt',
-    //   processSoccerMatch,
-    //   endOfMatchDay
-    // )
+    expect(readAndProcessStream).toHaveBeenCalledWith(
+      process.argv[2],
+      mockProcessSoccerMatch,
+      mockEndOfMatchDay
+    )
   })
 })

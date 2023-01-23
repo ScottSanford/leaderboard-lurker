@@ -1,8 +1,8 @@
-import { formatSoccerMatchResults, isEndOfMatchDay } from '../match-day-service'
+import { parseSoccerMatchResults, isEndOfMatchDay } from '../match-day-service'
 
 describe('match-day-service', () => {
-  describe('formatSoccerMatchResults()', () => {
-    test('formatSoccerMatchResults formats match results correctly', () => {
+  describe('parseSoccerMatchResults()', () => {
+    test('parseSoccerMatchResults formats match results correctly', () => {
       const soccerMatch = 'Team A 1, Team B 2'
       const expected = {
         awayTeam: {
@@ -14,7 +14,7 @@ describe('match-day-service', () => {
           score: 2,
         },
       }
-      expect(formatSoccerMatchResults(soccerMatch)).toEqual(expected)
+      expect(parseSoccerMatchResults(soccerMatch)).toEqual(expected)
     })
   })
 
