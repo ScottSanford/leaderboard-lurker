@@ -12,6 +12,7 @@
     "install:global": "npm i --location=global",
     "clean:some": "rm -rf ./lib",
     "local:file": "npm run build && leaderboardlurker input/soccer-matches.txt",
+    "generate:matches": "chmod +x ./matches && ./matches",
     "lint": "eslint src/",
     "lint:fix": "eslint . --fix",
     "test": "jest src",

@@ -89,8 +89,7 @@ One of the limitiations I encoutered was this program does not run continuously 
 
 Secondly, while I was not able to test for a TB in file size, I simulated a "larger" sample size with a million line item records. To run this, you can run the run the bash script I created in the repo called `matches`. Run these commands:
 ```
-> chmod +x ./matches
-> ./matches
+npm run generate:matches
 ```
 While running the larger sample size, I was curious to see how my local machine would handle this IO operation. I opened up the linux `top` command to show the active linux processes. After hitting `Ctrl + i`, I was able to witness a consistent %CPU% ~12% & the %MEM ~3.3%. This is great if this service needed to run on an instance with other services (maybe on EC2).
 
