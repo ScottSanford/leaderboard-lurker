@@ -5,7 +5,7 @@ After successfully installing `nvm` and running `v16.19.0`, run the following co
 ```bash
 npm run install:global
 ```
-This will install the `leaderboardlurker` command locally to your machine. Once the installation is complete, you can run the tool using one of the following commands:
+This will install _node_modules_, build the project, & install the `leaderboardlurker` command locally to your machine. Once the installation is complete, you can run the tool using one of the following commands:
 
 1. `leaderboardlurker input/sample-input.txt`
 2. `cat input/sample-input.txt | leaderboardlurker`
