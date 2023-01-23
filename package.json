@@ -1,5 +1,5 @@
 {
-  "name": "soccer-scores",
+  "name": "leaderboard-lurker",
   "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
@@ -20,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ScottSanford/soccer-scores.git"
+    "url": "git+https://github.com/ScottSanford/leaderboard-lurker.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://github.com/ScottSanford/soccer-scores#readme",
+  "homepage": "https://github.com/ScottSanford/leaderboard-lurker#readme",
   "devDependencies": {
     "@types/jest": "^29.2.6",
     "@types/node": "^18.11.18",
