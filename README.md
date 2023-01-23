@@ -1,4 +1,4 @@
-# Welcome to LeaderboardLurker
+# Welcome to LeaderboardLurker :soccer:
 The ultimate tool for tracking the top teams in your league!
 To get started, you'll need to install the executable locally by running the following command. This program runs on NodeJS (tested on `v16.19.0`). The recommended approach to install this Node version is through [Node Version Manager](https://github.com/nvm-sh/nvm).
 After successfully installing `nvm` and running `v16.19.0`, run the following command in your terminal prompt.
