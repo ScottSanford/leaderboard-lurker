@@ -87,7 +87,7 @@ Lastly, I believe writing tests based on behavior can also make it easier to und
 ### Technical Constraints
 One of the limitiations I encoutered was this program does not run continuously after reaching the end of a file. The application will close once the end of the file is reached. This is one of the limitations of Node's `fs.createReadStream`.
 
-Secondly, while I was not able to test for a TB in file size, I simulated a "larger" sample size with a million line item records. To run this, you can run the run the bash script I created in the repo called `matches`. Run these commands:
+Secondly, while I was not able to test for a TB in file size, I simulated a "larger" sample size with a million line items. To run this, you can run the run the bash script I created in the repo called `matches`. Run this command (note: it will take a few seconds):
 ```
 npm run generate:matches
 ```
