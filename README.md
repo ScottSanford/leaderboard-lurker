@@ -1,5 +1,5 @@
 # Welcome to LeaderboardLurker :soccer:
-The ultimate tool for tracking the top teams in your league!
+The ultimate tool for tracking (or lurking to see) the top teams in your league!
 To get started, you'll need to install the executable locally by running the following command. This program runs on NodeJS (tested on `v16.19.0`). The recommended approach to install this Node version is through [Node Version Manager](https://github.com/nvm-sh/nvm).
 After successfully installing `nvm` and running `v16.19.0`, run the following command in your terminal prompt.
 ```bash
@@ -18,7 +18,7 @@ With LeaderboardLurker, you'll never have to play hide-and-seek with the league 
 So, don't be a benchwarmer, join the game and become a __leaderboard lurker__ today!
 ___
 # Architectual Decisions
-The app uses NodeJS `v16.19.0` and is written in TypeScript. TypeScript provides additional type safety on top of JavaScript while also improving the development experience through IDE's and linters.
+The app uses NodeJS `v16.19.0` and is written in TypeScript. TypeScript provides additional type safety on top of JavaScript while also improving the development experience through IDE's and linters. I chose Node + TypeScript as those were my strongest languages, however, after completing this exercise I felt I could easily complete this app in Ruby.
 
 The application is architected into 3 main components:
 1. Command Line Parser
