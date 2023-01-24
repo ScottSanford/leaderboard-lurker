@@ -16,7 +16,7 @@
     "generate:matches": "chmod +x ./matches && ./matches",
     "lint": "eslint src/",
     "lint:fix": "eslint . --fix",
-    "test": "jest src",
+    "test": "jest src --runInBand --forceExit",
     "test:watch": "jest src --watch"
   },
   "repository": {
