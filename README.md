@@ -11,7 +11,14 @@ This will install _node_modules_, build the project, & install the `leaderboardl
 2. `cat input/sample-input.txt | leaderboardlurker`
 3. `leaderboardlurker < input/sample-input.txt`
 
-To run tests, run the following command: `npm test`
+### Troubleshoot
+If you are unable to run the `leaderboardlurker` command by itself, you can reference it directly from the bin directory like so:
+
+1. `./bin/leaderboardlurker input/sample-input.txt`
+2. `cat input/sample-input.txt | ./bin/leaderboardlurker`
+3. `./bin/leaderboardlurker < input/sample-input.txt`
+
+To run tests, simply run the following command: `npm test`
 
 With LeaderboardLurker, you'll never have to play hide-and-seek with the league leaders again! Our tool is like a sherlock for the soccer world, it finds the answers you need in no time.
 
