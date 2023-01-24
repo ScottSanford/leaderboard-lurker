@@ -42,7 +42,7 @@ function showMatchDayResults(): void {
       console.log(`${name}, ${score} ${score === 1 ? 'pt' : 'pts'}`)
     })
 
-  console.log('\n')
+  console.log('\n'.trim())
 }
 
 export function isEndOfMatchDay(
